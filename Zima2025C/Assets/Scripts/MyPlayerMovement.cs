@@ -23,6 +23,8 @@ public class MyPlayerMovement : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked; //do usuniêcia
+        Cursor.visible = false; //usun¹æ
         cc = GetComponent<CharacterController>();
     }
 
@@ -53,6 +55,7 @@ public class MyPlayerMovement : MonoBehaviour
         Vector3 localVelocity = transform.InverseTransformDirection(cc.velocity);
         animator.SetFloat("MoveForward", localVelocity.z);
         animator.SetFloat("MoveRight", localVelocity.x);
+        animator.SetBool("move", (localVelocity.z != 0 || localVelocity.x != 0));
         MoveDirection.y = yVeclocity;
     }
 
