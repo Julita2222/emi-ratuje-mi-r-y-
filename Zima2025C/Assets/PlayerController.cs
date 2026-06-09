@@ -23,12 +23,14 @@ public class PlayerController : MonoBehaviour
     public float speedBoostTimer;
 
     public Action OnHPChanged;
+    public Action OnSpeedChanged;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         playerTransform = GetComponent<Transform>();
         cameraTransform = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
+
         rb.maxAngularVelocity = baseSpeed;
         speed = baseSpeed;
     }
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void Update ()
     {
         gameTime = Time.timeSinceLevelLoad;
+
         speed = baseSpeed;
         rb.maxAngularVelocity = 10;
         speedBoostTimer -= Time.deltaTime;
@@ -43,7 +46,9 @@ public class PlayerController : MonoBehaviour
         {
             speed *= 3;
             rb.maxAngularVelocity = 15;
+            OnSpeedChanged?.Invoke();
         }
+
         rb.AddTorque(speed * Time.deltaTime * Input.GetAxis("Vertical") * cameraTransform.right);
         rb.AddTorque(speed * Time.deltaTime * Input.GetAxis("Horizontal") * Vector3.Cross(Vector3.up, cameraTransform.right));
 
@@ -64,7 +69,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-          
+
         //if (Time.timeSinceLevelLoad > 20)
         //{
         //    if (coins < 5)
@@ -97,5 +102,4 @@ public class PlayerController : MonoBehaviour
     {
         speedBoostTimer = 5f;
     }
-
 }
