@@ -42,7 +42,7 @@ public class MyPlayerHealth : MonoBehaviour
         if (HP <= 0)
         {
             dead = true;
-            animator.SetBool("Deadth", true);
+            animator.SetBool("Death", true);
             Camera.main.GetComponent<MyCameraMovement>().DetachCamera();
             Instantiate(deathPrefab, transform.position, transform.rotation);
             onDeath?.Invoke();
